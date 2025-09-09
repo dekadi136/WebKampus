@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MahasiswaRole {
+  korti
+  mahasiswa
+}
+
+enum StatusDosen {
+  aktif
+  nonaktif
+}
+
+enum StatusMahasiswa {
+  aktif
+  banned
+  nonaktif
+}
+
+enum StatusTugas {
+  ditugaskan
+  selesai
+}
+
+model Mahasiswa {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name      String?
+  email     String   @unique
+  password  String
+  role  MahasiswaRole    @default(mahasiswa)
+  mahasiswaBio MahasiswaBio?
+  kelas Kelas[]
+  tugas MahasiswaOnTugas[]
+}
+
+model Dosen {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name      String?
+  email     String   @unique
+  password  String
+  dosenBio DosenBio?
+  kelas Kelas[]
+  tugas Tugas[]
+}
+
+model DosenBio {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  nidn String @unique
+  status StatusDosen @default(aktif)
+  dosenId Int @unique
+  dosen Dosen @relation(fields: [dosenId], references: [id], onDelete: Cascade)
+}
+
+model MahasiswaBio {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  nim       String   @unique
+  jurusan   String
+  angkatan  String
+  mahasiswaId    Int @unique
+  mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id], onDelete: Cascade)
+}
+
+model MataKuliah{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  code String @unique
+  name String 
+  kelas MataKuliahOnKelas[]
+}
+  
+model Kelas {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name String
+  mahasiswaId Int @unique
+  mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id], onDelete: Cascade)
+  dosenId Int @unique
+  dosen Dosen @relation(fields: [dosenId], references: [id], onDelete: Cascade)
+  mataKuliah MataKuliahOnKelas[]
+  
+}
+
+model Tugas {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name String
+  jadwal String
+  status StatusTugas @default(ditugaskan)
+  dosenId Int 
+  dosen Dosen @relation(fields: [dosenId], references: [id], onDelete: Cascade)
+  mahasiswa MahasiswaOnTugas[]
+}
+
+model MahasiswaOnTugas {
+  id Int @id @default(autoincrement())
+  createAt DateTime @default(now())
+  mahasiswaId Int
+  tugasId Int
+  namaMahasiswa String
+  namaTugas String
+  mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id], onDelete: Cascade)
+  tugas Tugas @relation(fields: [tugasId], references: [id], onDelete: Cascade)
+}
+
+model MataKuliahOnKelas {
+  id Int @id @default(autoincrement())
+  createAt DateTime @default(now())
+  mataKuliahId Int
+  KelasId Int 
+  mataKuliah MataKuliah @relation(fields: [mataKuliahId], references: [id], onDelete: Cascade)
+  kelas Kelas @relation(fields: [KelasId], references: [id], onDelete: Cascade)
+}
