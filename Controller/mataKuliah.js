@@ -5,23 +5,23 @@ const prisma = new PrismaClient();
 export async function createMataKuliah(req, res) {
   const body = req.body;
 
-  if (!body.code.trim() || body.code.trim() === "") {
-    return res.status(400).json({ error: "Matkul code is required" });
+  if (!body.name.trim() || body.name.trim() === "") {
+    return res.status(400).json({ error: "Matkul name is required" });
   }
 
-  if (!body.name.trim() || body.name.trim() == "") {
-    return res.status(400).json({ error: "Matkul name is required" });
+  if (!body.sks.trim() || body.sks.trim() == "") {
+    return res.status(400).json({ error: "Matkul sks is required" });
   }
 
   try {
     const dataMataKuliah = {
-      code: body.code,
       name: body.name,
+      sks: body.sks,
     };
 
     const existNim = await prisma.mataKuliah.findUnique({
       where: {
-        code: body.code,
+        name: body.name,
       },
     });
 
@@ -54,6 +54,7 @@ export async function getMataKuliahByParams(req, res) {
       where: where,
       include: {
         kelas: true,
+        tugas: true,
       },
     });
     return res.status(200).json(mataKuliah);
@@ -68,6 +69,7 @@ export async function getAllMataKuliah(req, res) {
     const mataKuliah = await prisma.mataKuliah.findMany({
       include: {
         kelas: true,
+        tugas: true,
       },
     });
     return res.status(200).json(mataKuliah);
@@ -118,14 +120,12 @@ export async function updateMataKuliah(req, res) {
     };
 
     const dataMataKuliah = {
-      code: body.code,
       name: body.name,
+      sks: body.sks,
     };
 
     const existMataKuliah = await prisma.mataKuliah.findUnique({
-      where: {
-        id: mataKuliahParamsId,
-      },
+      where: where,
     });
 
     if (!existMataKuliah) {

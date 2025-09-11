@@ -8,6 +8,11 @@ import MahasiswaBioRoutes from "./Routes/mahasiswaBio.js";
 import DosenBioRoutes from "./Routes/dosenBio.js";
 import MataKuliahRoutes from "./Routes/mataKuliah.js";
 import TugasRoutes from "./Routes/tugas.js";
+import KelasRoutes from "./Routes/kelas.js";
+import BannedMahasiswaRoutes from "./Routes/bannedMahasiswa.js";
+import MahasiswaOnKelasRouter from "./Routes/mahasiswaOnKelas.js";
+import MahasiswaOnTugasRouter from "./Routes/mahasiswaOnTugas.js";
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -37,6 +42,18 @@ app.use(MataKuliahRoutes);
 
 // TUGAS ROUTES
 app.use(TugasRoutes);
+
+// KELAS ROUTES
+app.use(KelasRoutes);
+
+// BANNED MAHASISWA ROUTES
+app.use(BannedMahasiswaRoutes);
+
+// MAHASISWA TUGAS ROUTES
+app.use(MahasiswaOnTugasRouter);
+
+// MAHASISWA KELAS ROUTES
+app.use(MahasiswaOnKelasRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world susupati");

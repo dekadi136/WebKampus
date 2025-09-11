@@ -14,8 +14,27 @@ export async function getMahasiswaByParams(req, res) {
       where: where,
       include: {
         mahasiswaBio: true,
-        tugas: true,
-        kelas: true,
+        tugas: {
+          include: {
+            tugas: {
+              include: {
+                dosen: true,
+                mataKuliah: true,
+              },
+            },
+          },
+        },
+        kelas: {
+          include: {
+            kelas: {
+              include: {
+                dosen: true,
+                mataKuliah: true,
+              },
+            },
+          },
+        },
+        banned: true,
       },
     });
     return res.status(200).json(mahasiswa);
@@ -30,8 +49,27 @@ export async function getAllMahasiswa(req, res) {
     const mahasiswas = await prisma.mahasiswa.findMany({
       include: {
         mahasiswaBio: true,
-        tugas: true,
-        kelas: true,
+        tugas: {
+          include: {
+            tugas: {
+              include: {
+                dosen: true,
+                mataKuliah: true,
+              },
+            },
+          },
+        },
+        kelas: {
+          include: {
+            kelas: {
+              include: {
+                dosen: true,
+                mataKuliah: true,
+              },
+            },
+          },
+        },
+        banned: true,
       },
     });
     return res.status(200).json(mahasiswas);
@@ -91,6 +129,8 @@ export async function updateMahasiswa(req, res) {
     const dataMahasiswa = {
       name: body.name.trim(),
       email: body.email.trim(),
+      status: body.status.trim(),
+      role: body.role.trim(),
     };
 
     const mahasiswa = await prisma.mahasiswa.update({
@@ -100,6 +140,84 @@ export async function updateMahasiswa(req, res) {
     return res.status(200).json(mahasiswa);
   } catch (err) {
     console.log("Error updating mahasiswa", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+export async function promotMahasiswaKorti(req, res) {
+  const mahasiswaId = +req.params.id;
+
+  if (!body.role.trim() || body.role.trim() === "") {
+    return res.status(400).json({ error: "Role is required" });
+  }
+
+  try {
+    const where = {
+      id: mahasiswaId,
+    };
+
+    const isExist = await prisma.mahasiswa.findUnique({
+      where: where,
+    });
+
+    if (!isExist) {
+      return res.status(404).json({ error: "Mahasiswa not found" });
+    }
+
+    const dataPromotMahasiswaKorti = {
+      role: "korti",
+    };
+
+    const promotMhsKorti = await prisma.mahasiswa.update({
+      where: where,
+      data: dataPromotMahasiswaKorti,
+    });
+
+    return res.status(200).json({
+      message: "Promoting mahasiswa korti successfully",
+      data: promotMhsKorti,
+    });
+  } catch (err) {
+    console.log("Error promoting mahasiswa korti", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+export async function unpromotMahasiswaKorti(req, res) {
+  const mahasiswaId = +req.params.id;
+
+  if (!body.role.trim() || body.role.trim() === "") {
+    return res.status(400).json({ error: "Role is required" });
+  }
+
+  try {
+    const where = {
+      id: mahasiswaId,
+    };
+
+    const isExist = await prisma.mahasiswa.findUnique({
+      where: where,
+    });
+
+    if (!isExist) {
+      return res.status(404).json({ error: "Mahasiswa not found" });
+    }
+
+    const dataPromotMahasiswaKorti = {
+      role: "mahasiswa",
+    };
+
+    const promotMhsKorti = await prisma.mahasiswa.update({
+      where: where,
+      data: dataPromotMahasiswaKorti,
+    });
+
+    return res.status(200).json({
+      message: "Unpromoting mahasiswa korti successfully",
+      data: promotMhsKorti,
+    });
+  } catch (err) {
+    console.log("Error unpromoting mahasiswa korti", err);
     return res.status(500).json({ error: "Internal server error" });
   }
 }

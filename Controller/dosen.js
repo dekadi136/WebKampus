@@ -31,8 +31,19 @@ export async function getAllDosen(req, res) {
     const dosen = await prisma.dosen.findMany({
       include: {
         dosenBio: true,
-        kelas: true,
-        tugas: true,
+        kelas: {
+          include: {
+            mataKuliah: true,
+            mahasiswa: {
+              include: { mahasiswa: true },
+            },
+          },
+        },
+        tugas: {
+          include: {
+            mataKuliah: true,
+          },
+        },
       },
     });
     return res.status(200).json(dosen);

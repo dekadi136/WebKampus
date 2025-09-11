@@ -5,6 +5,8 @@ import {
   getAllMahasiswa,
   deleteMahasiswa,
   updateMahasiswa,
+  promotMahasiswaKorti,
+  unpromotMahasiswaKorti,
 } from "../Controller/mahasiswa.js";
 import {
   authenticationTokenMiddleware,
@@ -36,6 +38,18 @@ router.put(
   authenticationTokenMiddleware,
   allowRoles(["mahasiswa", "dosen"], ["korti"]),
   updateMahasiswa
+);
+router.patch(
+  "/mahasiswa/:id/promotKorti",
+  authenticationTokenMiddleware,
+  allowRoles(["mahasiswa", "dosen"], ["korti"]),
+  promotMahasiswaKorti
+);
+router.patch(
+  "/mahasiswa/:id/unpromotKorti",
+  authenticationTokenMiddleware,
+  allowRoles(["mahasiswa", "dosen"]),
+  unpromotMahasiswaKorti
 );
 
 export default router;

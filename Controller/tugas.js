@@ -23,6 +23,7 @@ export async function createTugas(req, res) {
       jadwal: body.jadwal,
       status: body.status,
       dosenId: +req.user.id,
+      mataKuliahId: +body.mataKuliahId,
     };
 
     const tugas = await prisma.tugas.create({
@@ -36,10 +37,10 @@ export async function createTugas(req, res) {
       mahasiswaOnTugas.push({
         mahasiswaId: +mahasiswas[i].id,
         tugasId: +tugas.id,
-        namaMahasiswa: mahasiswas[i].name,
-        namaTugas: tugas.name,
       });
     }
+
+    // return res.status(400).json(mahasiswaOnTugas)
 
     const createTugasMahasiswa = await prisma.mahasiswaOnTugas.createMany({
       data: mahasiswaOnTugas,
@@ -47,7 +48,8 @@ export async function createTugas(req, res) {
 
     return res.status(201).json({
       message: "Creating tugas successfully",
-      data: tugas,
+      dataTugas: tugas,
+      dataTugasMahasiswa: createTugasMahasiswa,
     });
   } catch (err) {
     console.log("Error creating tugas", err);
@@ -141,9 +143,7 @@ export async function updateTugas(req, res) {
     };
 
     const existTugas = await prisma.tugas.findUnique({
-      where: {
-        id: tugasParamsId,
-      },
+      where: where,
     });
 
     if (!existTugas) {
@@ -155,36 +155,9 @@ export async function updateTugas(req, res) {
       data: dataTugas,
     });
 
-    const mahasiswas = await prisma.mahasiswa.findMany();
-
-    let dataMahasiswaOnTugas = [];
-    for (let i = 0; i < mahasiswas.length; i++) {
-      dataMahasiswaOnTugas.push({
-        mahasiswaId: +mahasiswas[i].id,
-        tugasId: +tugas.id,
-        namaMahasiswa: mahasiswas[i].name,
-        namaTugas: tugas.name,
-      });
-    }
-
-    const mahasiswaOnTugasDatas = await prisma.mahasiswaOnTugas.findMany();
-
-    let dataTugasMahasiswa = [];
-    let tugasMahasiswaUpdate = {};
-    for (let i = 0; i < dataMahasiswaOnTugas.length; i++) {
-      tugasMahasiswaUpdate = await prisma.mahasiswaOnTugas.update({
-        where: {
-          id: mahasiswaOnTugasDatas[i].id,
-        },
-        data: dataMahasiswaOnTugas[i],
-      });
-      dataTugasMahasiswa.push(tugasMahasiswaUpdate);
-    }
-
     return res.status(200).json({
       message: "Update mata kuliah successfully",
       dataTugas: tugas,
-      dataMahasiswaOnTugas: dataTugasMahasiswa,
     });
   } catch (err) {
     console.log("Error updating mata kuliah", err);
