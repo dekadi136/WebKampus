@@ -17,7 +17,7 @@ export async function authenticationTokenMiddleware(req, res, next) {
     console.log(verifiedToken);
 
     if (!verifiedToken || !verifiedToken.id) {
-      return res.status(500).json({ error: "Invalid token" });
+      return res.status(400).json({ error: "Invalid token" });
     }
 
     req.user = {

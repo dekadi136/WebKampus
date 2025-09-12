@@ -21,19 +21,19 @@ router.get(
 router.get(
   "/dosen",
   authenticationTokenMiddleware,
-  allowRoles(["dosen"]),
+  allowRoles(["dosen"], ["dosen"]),
   getAllDosen
 );
 router.delete(
   "/dosen/:id",
   authenticationTokenMiddleware,
-  allowRoles(["dosen"]),
+  allowRoles(["dosen"], ["dosen"]),
   deleteDosen
 );
 router.put(
   "/dosen/:id",
   authenticationTokenMiddleware,
-  allowRoles(["dosen"]),
+  allowRoles(["dosen"], ["dosen"]),
   updateDosen
 );
 

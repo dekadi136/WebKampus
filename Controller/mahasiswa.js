@@ -52,19 +52,47 @@ export async function getAllMahasiswa(req, res) {
         tugas: {
           include: {
             tugas: {
-              include: {
-                dosen: true,
-                mataKuliah: true,
+              select: {
+                name: true,
+                jadwal: true,
+                status: true,
+                dosen: {
+                  select: {
+                    name: true,
+                  },
+                },
+                mataKuliah: {
+                  select: {
+                    name: true,
+                  },
+                },
               },
             },
           },
         },
         kelas: {
-          include: {
+          select: {
             kelas: {
-              include: {
-                dosen: true,
-                mataKuliah: true,
+              select: {
+                ruangan: true,
+                hari: true,
+                jam: true,
+                dosen: {
+                  select: {
+                    name: true,
+                  },
+                },
+                mataKuliah: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+            mahasiswa: {
+              select: {
+                name: true,
+                email: true,
               },
             },
           },
@@ -147,10 +175,6 @@ export async function updateMahasiswa(req, res) {
 export async function promotMahasiswaKorti(req, res) {
   const mahasiswaId = +req.params.id;
 
-  if (!body.role.trim() || body.role.trim() === "") {
-    return res.status(400).json({ error: "Role is required" });
-  }
-
   try {
     const where = {
       id: mahasiswaId,
@@ -162,6 +186,10 @@ export async function promotMahasiswaKorti(req, res) {
 
     if (!isExist) {
       return res.status(404).json({ error: "Mahasiswa not found" });
+    }
+
+    if (isExist.role === "korti") {
+      return res.status(409).json({ error: "Mahasiswa role invalid" });
     }
 
     const dataPromotMahasiswaKorti = {
@@ -186,10 +214,6 @@ export async function promotMahasiswaKorti(req, res) {
 export async function unpromotMahasiswaKorti(req, res) {
   const mahasiswaId = +req.params.id;
 
-  if (!body.role.trim() || body.role.trim() === "") {
-    return res.status(400).json({ error: "Role is required" });
-  }
-
   try {
     const where = {
       id: mahasiswaId,
@@ -201,6 +225,16 @@ export async function unpromotMahasiswaKorti(req, res) {
 
     if (!isExist) {
       return res.status(404).json({ error: "Mahasiswa not found" });
+    }
+
+    if (isExist.role === "mahasiswa") {
+      return res.status(409).json({ error: "Mahasiswa role invalid" });
+    }
+
+    if (isExist.role === "korti") {
+      return res
+        .status(409)
+        .json({ error: "Korti cant unpromote other korti" });
     }
 
     const dataPromotMahasiswaKorti = {

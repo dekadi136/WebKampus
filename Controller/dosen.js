@@ -14,8 +14,37 @@ export async function getDosenByParams(req, res) {
       where: where,
       include: {
         dosenBio: true,
-        kelas: true,
-        tugas: true,
+        kelas: {
+          include: {
+            mataKuliah: {
+              select: {
+                name: true,
+              },
+            },
+            mahasiswa: {
+              select: {
+                mahasiswa: {
+                  select: {
+                    name: true,
+                    email: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        tugas: {
+          select: {
+            name: true,
+            jadwal: true,
+            status: true,
+            mataKuliah: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -33,15 +62,33 @@ export async function getAllDosen(req, res) {
         dosenBio: true,
         kelas: {
           include: {
-            mataKuliah: true,
+            mataKuliah: {
+              select: {
+                name: true,
+              },
+            },
             mahasiswa: {
-              include: { mahasiswa: true },
+              select: {
+                mahasiswa: {
+                  select: {
+                    name: true,
+                    email: true,
+                  },
+                },
+              },
             },
           },
         },
         tugas: {
-          include: {
-            mataKuliah: true,
+          select: {
+            name: true,
+            jadwal: true,
+            status: true,
+            mataKuliah: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
       },

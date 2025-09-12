@@ -155,6 +155,16 @@ export async function updateKelas(req, res) {
   }
 
   try {
+    const existKelas = await prisma.kelas.findUnique({
+      where: {
+        id: kelasId,
+      },
+    });
+
+    if (!existKelas) {
+      return res.status(404).json({ error: "Kelas not found" });
+    }
+
     const kelas = await prisma.kelas.update({
       where: {
         id: kelasId,

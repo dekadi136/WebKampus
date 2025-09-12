@@ -30,25 +30,25 @@ router.get(
 router.delete(
   "/mahasiswa/:id",
   authenticationTokenMiddleware,
-  allowRoles(["mahasiswa", "dosen"], ["korti"]),
+  allowRoles(["mahasiswa", "dosen"], ["korti", "dosen"]),
   deleteMahasiswa
 );
 router.put(
   "/mahasiswa/:id",
   authenticationTokenMiddleware,
-  allowRoles(["mahasiswa", "dosen"], ["korti"]),
+  allowRoles(["mahasiswa", "dosen"], ["korti", "dosen"]),
   updateMahasiswa
 );
 router.patch(
   "/mahasiswa/:id/promotKorti",
   authenticationTokenMiddleware,
-  allowRoles(["mahasiswa", "dosen"], ["korti"]),
+  allowRoles(["mahasiswa", "dosen"], ["korti", "dosen"]),
   promotMahasiswaKorti
 );
 router.patch(
   "/mahasiswa/:id/unpromotKorti",
   authenticationTokenMiddleware,
-  allowRoles(["mahasiswa", "dosen"]),
+  allowRoles(["mahasiswa", "dosen"], ["korti", "dosen"]),
   unpromotMahasiswaKorti
 );
 

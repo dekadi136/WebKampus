@@ -37,7 +37,15 @@ export async function createMahasiswaBanned(req, res) {
 
 export async function getAllMahasiswaBanned(req, res) {
   try {
-    const mahasiswaBanned = await prisma.bannedMahasiswa.findMany();
+    const mahasiswaBanned = await prisma.bannedMahasiswa.findMany({
+      include: {
+        mahasiswa: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
 
     return res.status(200).json({
       data: mahasiswaBanned,

@@ -139,7 +139,6 @@ export async function updateTugas(req, res) {
       name: body.name,
       jadwal: body.jadwal,
       status: body.status,
-      dosenId: +req.user.id,
     };
 
     const existTugas = await prisma.tugas.findUnique({
@@ -147,7 +146,11 @@ export async function updateTugas(req, res) {
     });
 
     if (!existTugas) {
-      return res.status(404).json({ error: "Mata kuliah not found" });
+      return res.status(404).json({ error: "Tugas not found" });
+    }
+
+    if (existTugas.dosenId !== req.user.id) {
+      return res.status(409).json({ error: "Unkown authorize" });
     }
 
     const tugas = await prisma.tugas.update({
