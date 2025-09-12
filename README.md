@@ -20,10 +20,13 @@ Sebuah backend API untuk sistem akademik kampus yang mendukung manajemen dosen, 
 - Tugas → Penugasan oleh dosen, status per mahasiswa (**ditugaskan**, **selesai**).
 - Banned Mahasiswa → Bisa dilakukan oleh **dosen** & **korti**.
 - Promosi Ketua Mahasiswa → Hanya **dosen** & **korti** yang dapat menaikkan role mahasiswa.
-- 
+
+
 ##  ERD (Entity Relationship Diagram)
 
 ![ERD](./docs/ERD.png)
+
+
 ## Important Information!
 
 Supaya membuat aplikasi ini tidak terlalu kompleks dan panjang, ada beberapa hal yang dibatasi, yaitu :
