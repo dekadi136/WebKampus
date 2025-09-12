@@ -24,7 +24,7 @@ Sebuah backend API untuk sistem akademik kampus yang mendukung manajemen dosen, 
 
 ##  ERD (Entity Relationship Diagram)
 
-![ERD](./docs/ERD.png)
+![ERD](./docs/erdNew.png)
 
 
 ## Important Information!
