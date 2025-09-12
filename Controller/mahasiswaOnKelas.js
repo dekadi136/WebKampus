@@ -14,5 +14,8 @@ export async function getAllMahasiswaOnKelas(req, res) {
     return res.status(200).json({
       data: mahasiswaOnKelas,
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log("Error getting mahasiswaOnKelas", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 }
