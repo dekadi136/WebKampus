@@ -30,21 +30,21 @@ router.get(
 router.post(
   "/mataKuliah",
   authenticationTokenMiddleware,
-  allowRoles(["mahasiswa", "dosen"], ["mahasiswa", "korti", "dosen"]),
+  allowRoles(["dosen"], ["dosen"]),
   createMataKuliah
 );
 
 router.put(
   "/mataKuliah/:id",
   authenticationTokenMiddleware,
-  allowRoles(["mahasiswa", "dosen"], ["mahasiswa", "korti", "dosen"]),
+  allowRoles(["dosen"], ["dosen"]),
   updateMataKuliah
 );
 
 router.delete(
   "/mataKuliah/:id",
   authenticationTokenMiddleware,
-  allowRoles(["mahasiswa", "dosen"], ["mahasiswa", "korti", "dosen"]),
+  allowRoles(["dosen"], ["dosen"]),
   deleteMataKuliah
 );
 

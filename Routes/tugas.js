@@ -17,14 +17,14 @@ const router = e.Router();
 router.get(
   "/tugas",
   authenticationTokenMiddleware,
-  allowRoles(["dosen"], ["dosen"]),
+  allowRoles(["mahasiswa", "dosen"], ["mahasiswa", "korti", "dosen"]),
   getAllTugas
 );
 
 router.get(
   "/tugas/:id",
   authenticationTokenMiddleware,
-  allowRoles(["dosen"], ["dosen"]),
+  allowRoles(["mahasiswa", "dosen"], ["mahasiswa", "korti", "dosen"]),
   getTugasByParams
 );
 
