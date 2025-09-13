@@ -7,10 +7,12 @@ Sebuah backend API untuk sistem akademik kampus yang mendukung manajemen dosen, 
 
 ## Tech Stack
 
-- [Express] - HTML enhanced for web apps!
-- [Prisma ORM] - awesome web-based text editor
-- [PostgreSQL] - Markdown parser done right. Fast and easy to extend.
-- [JWT Authentication] - great UI boilerplate for modern web apps
+- [Express] - Web framework minimalis untuk Node.js yang digunakan untuk membangun RESTful API.
+- [Prisma ORM] - Object Relational Mapping (ORM) modern untuk mengelola database PostgreSQL dengan query yang lebih mudah dan terstruktur.
+- [PostgreSQL] - Relational Database Management System (RDBMS) yang digunakan sebagai basis data utama.
+- [JWT Authentication] - Mekanisme authentication & authorization berbasis token untuk keamanan akses API.
+- [Nodemon] – Development tool untuk otomatis restart server saat ada perubahan kode.
+- [Bcrypt] – Library untuk hashing password agar lebih aman.
 
 
 ## Features
@@ -24,7 +26,7 @@ Sebuah backend API untuk sistem akademik kampus yang mendukung manajemen dosen, 
 
 ##  ERD (Entity Relationship Diagram)
 
-![ERD](./docs/ERD.png)
+![ERD](./docs/erdNew.png)
 
 
 ## Important Information!
@@ -71,4 +73,6 @@ Instal dependensi dan lalu jalankan server.
    [Prisma ORM]: <https://www.prisma.io/>
    [PostgreSQL]: <https://www.postgresql.org/>
    [JWT Authentication]: <https://www.jwt.io/>
+   [Nodemon]: <https://www.npmjs.com/package/nodemon>
+   [Bcrypt]: <https://www.npmjs.com/package/bcrypt>
 
