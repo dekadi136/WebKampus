@@ -7,12 +7,12 @@ Sebuah backend API untuk sistem akademik kampus yang mendukung manajemen dosen, 
 
 ## Tech Stack
 
-- [Express] - Web framework minimalis untuk Node.js yang digunakan untuk membangun RESTful API.
-- [Prisma ORM] - Object Relational Mapping (ORM) modern untuk mengelola database PostgreSQL dengan query yang lebih mudah dan terstruktur.
-- [PostgreSQL] - Relational Database Management System (RDBMS) yang digunakan sebagai basis data utama.
-- [JWT Authentication] - Mekanisme authentication & authorization berbasis token untuk keamanan akses API.
-- [Nodemon] – Development tool untuk otomatis restart server saat ada perubahan kode.
-- [Bcrypt] – Library untuk hashing password agar lebih aman.
+- [Express] 
+- [Prisma ORM] 
+- [PostgreSQL] 
+- [JWT Authentication]
+- [Nodemon]
+- [Bcrypt] 
 
 
 ## Features
@@ -26,7 +26,7 @@ Sebuah backend API untuk sistem akademik kampus yang mendukung manajemen dosen, 
 
 ##  ERD (Entity Relationship Diagram)
 
-![ERD](./docs/erdNew.png)
+![ERD](./docs/prisma-erd.svg)
 
 
 ## Important Information!
