@@ -15,7 +15,8 @@ Sebuah backend API untuk sistem akademik kampus yang mendukung manajemen dosen, 
 - [Nodemon]
 - [Bcrypt]
 
-##Requirement 
+
+## Requirement 
 - [NodeJs] - Versi 20.7.0 ke atas
 - [Express] - Versi 5.1.0 ke atas
 - [PostgreSQL] - Versi 17.2 ke atas
