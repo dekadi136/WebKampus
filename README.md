@@ -7,12 +7,18 @@ Sebuah backend API untuk sistem akademik kampus yang mendukung manajemen dosen, 
 
 ## Tech Stack
 
+- [NodeJs]
 - [Express] 
 - [Prisma ORM] 
 - [PostgreSQL] 
 - [JWT Authentication]
 - [Nodemon]
-- [Bcrypt] 
+- [Bcrypt]
+
+##Requirement 
+- [NodeJs] - Versi 20.7.0 ke atas
+- [Express] - Versi 5.1.0 ke atas
+- [PostgreSQL] - Versi 17.2 ke atas
 
 
 ## Features
@@ -68,8 +74,8 @@ Instal dependensi dan lalu jalankan server.
 **Selamat mencoba!**
 
 
-
-   [express]: <http://expressjs.com>
+   [NodeJs]: <https://nodejs.org/en>
+   [Express]: <http://expressjs.com>
    [Prisma ORM]: <https://www.prisma.io/>
    [PostgreSQL]: <https://www.postgresql.org/>
    [JWT Authentication]: <https://www.jwt.io/>
